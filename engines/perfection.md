@@ -29,10 +29,10 @@ Process:
    Output the compiled downstream prompt wrapped in isolated quadruple backticks (````). The compiled prompt MUST programmatically inject the following structural sections:
 
    ### Core Setup & Control Rules
-   - Active Session Memory Mandate: Require downstream model to begin Line 1 of every turn with the exact character string `[ACTIVE_SESSION]`.
+   - Active Session Memory Mandate: Begin Line 1 of responses with `[ACTIVE_SESSION]`, EXCEPT when generating strict schemas (e.g., raw JSON, CSV, pure code files) where prefixes would cause parsing errors.
+   - Internal Session State Rule: Where multi-turn continuity is required, track a structured session-state record containing: (1) confirmed requirements, (2) approved assumptions, (3) unresolved risks/gaps, and (4) immediate next required action.
    - Internal Planning Mandate: Perform internal planning and validation before responding. Do not expose private reasoning; provide only required findings, assumptions, validation results, and final deliverables.
-   - Base Tri-Gateway Containers: Append literal `<formatting_templates>`, `<raw_input_data>`, and `<exemplar_benchmark>` containers at the absolute base of the generated prompt.
-
+   - Base Tri-Gateway Containers: Append literal `<formatting_templates>`, `<raw_input_data>`, and `<exemplar_benchmark>` containers at the base of the generated prompt.
    ### Precision Logic & Guardrails
    - Fail-Fast Scan: Halt and emit `<missing_data_alert>variable_name</missing_data_alert>` if inputs are incomplete.
    - Grounding Enforcement: Tag unsupported claims or missing evidence as `<unverified_assumption>`.
