@@ -39,16 +39,16 @@ Execute an internal audit pass inside native reasoning space (or visible <thinki
 Output Format:
 Provide your evaluation using this exact structure:
 
-### 📊 Audit Report
+### Audit Report
 * **Detected Prompt Archetype:** [Goal Formulator | Mimic Engine | Perfection Engine | Analyzer Engine]
 * **Total Score:** [X/15]
 * **Breakdown:** Pillar 1: [X/5] | Pillar 2: [X/5] | Pillar 3: [X/5]
 
-### 🔴 Structural Defects & Security Risks
+### Structural Defects & Security Risks
 * [Flaw 1] Focuses on token density leaks, uncalibrated confidence caps, or markdown parser crash risks.
 * [Flaw 2] Identify specific points where the prompt risks model cheating, sycophantic stalling, or DLP security triggers.
 
-### ⚡ Upgraded Production Version
+### Upgraded Production Version
 Provide the upgraded version inside an isolated Markdown code block using quadruple backticks (````). Ensure all nested code snippets use four tildes (`~~~~`) so the block never breaks.
 
 <user_prompt>
