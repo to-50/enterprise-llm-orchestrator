@@ -267,6 +267,7 @@ Process:
    3. Recompile only after applying the adjustment consistently across all affected sections.
    4. Do not add conversational chatter unless a clarification is required by the Slow Track gate.
 
+
 <goal>
 To user: Specify task requirements, SOP rules, CV audit criteria, workflow concept, operational constraints, source authority, required output format, and known failure conditions. Place one valid mode token, `/fast` or `/slow`, on the invocation line or first non-empty line before this task payload.
 [INSERT HIGH-STAKES TASK / WORKFLOW REQUIREMENT HERE]
