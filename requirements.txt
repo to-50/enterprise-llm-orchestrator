@@ -1,2 +1,54 @@
-google-genai>=0.1.0
-python-dotenv>=1.0.0
+Overall read
+Strong domain thesis, genuinely good adapter design — but it's a stylesheet, not a compiler. It specifies what good output looks like in admirable detail, and almost nothing about how unresolved parameters are handled. Set beside perfection, the gap isn't polish, it's the discipline layer: no tiering, no termination condition, no auditable output contract.
+
+The fixes are mostly additive. Your adapters can stay untouched.
+
+What's working
+The Environment Abstraction Layer is the best idea here. Tier A portable vs. Tier B native tool chains solves the failure where a prompt assumes tools and compiles to a no-op in plain chat. That's the same reasoning as perfection §7 APPLICABILITY (a), arrived at independently.
+
+Your quantified constraints are real constraints. Max 3 takeaways, max 9 words/bullet, 20/50/30 pacing, --ar 16:9. These pass the mechanism test — a check can fail. Most style prompts say "be concise" and ship nothing.
+
+Zero-Code Rule is a detectable negative constraint (did output contain an HTML fence? observable). De-plagiarism filter is load-bearing for exemplar work. Keep both.
+
+Structural problems, worst first
+1. No materiality tiering — nothing stops invention. This is the hole everything else falls through. Style parameters feel low-stakes and are actually determinative: default "audience = executive board" when it's a customer webinar and every action header is wrong. Tier-1 candidates you're currently letting the model invent:
+
+target audience + seniority
+slide count / deck length
+brand constraints (palette, fonts, logo rules)
+the target image model (see #3)
+the exemplar itself under /template
+environment tier (see #4)
+2. The 5-Pillar Gate is declared, never operationalized. No status vocabulary, no turn format, no exit condition, no progress discipline, no user escape hatch. "Enforce the gate" is an instruction to itself with no mechanism — in practice /slow yields an unbounded freeform interrogation that re-asks answered questions and terminates whenever the model gets bored. Compare §3.1–3.7: the pillar ledger is worthless without the status vocabulary and the exit footer.
+
+3. Three incompatible image grammars collapsed into one adapter. "Compile Midjourney, Flux, or DALL-E 3 prompts" — Midjourney takes weighted keyword sequences plus -- flags; DALL-E 3 takes natural-language sentences and silently rewrites your prompt; Flux takes prose and has no --ar. One emitted prompt is syntactically invalid for at least two of the three. Target model is Tier 1, not a footnote.
+
+4. Tier A/B detection rule is absent. How does the model decide which environment it's in? It can't reliably introspect tool availability, so it will guess — and the failure mode is hallucinated tool calls, the worst outcome this design can produce. Make it a declared input, gate its absence, and define the Tier B→A fallback when a declared tool 404s.
+
+5. /template with no exemplar is an unhandled null. Structural replication of nothing. Hard blocking gate.
+
+6. Cliché Firewall is invoked three times and never defined. As written it's an adjectival edge in a rulebook's clothes. Needs an enumerated banlist (delve, tapestry, unlock, elevate, game-changer, in today's fast-paced) or a mechanical test. Same problem: "elite human standards," "production-grade," "high-fidelity," and "Tier-1 consulting standards" — whose? If you mean Minto's pyramid principle, say Minto.
+
+7. No quality layer at all. The irony: a quality-mimicry engine with no defined quality standard, no reviewer, no critique pass. Minimum viable is two rubric dimensions per adapter, e.g. — Canva: "Action headers — fails if any header is a topic label rather than an assertion." Prose: "Pacing — fails if any 100-word window deviates >10% from 20/50/30."
+
+8. The pacing distribution has no denominator. 20/50/30 of what — sentences per paragraph, per section, per document? Measured when, and what happens on violation? Also it's asserted as universal cadence, which is wrong for legal notices and technical docs.
+
+9. No output contract. No section order, no Compile Header, no version stamp — so §16.2(a)'s recompile trigger is unobservable and the user cannot audit what was invented. Related: quadruple backticks are hardcoded. Paste an exemplar containing a 4-backtick fence (routine in docs about markdown) and the artifact breaks. Use adaptive fencing.
+
+10. Containers injected unconditionally. Empty containers are worse than absent ones — they invite the downstream model to fill them.
+
+11. "Fail-fast validation" is named, not specified. No error codes, no halt semantics, no envelope. Your Tier B tool chain is the most failure-prone component in the design and has zero exception protocol: what happens when search_brand_templates returns 0 results, or autofill_design rejects the field mapping?
+
+12. Mode parsing gaps. /slow is marked default in the process body while the header reads /fast or /slow — and your sibling compiler defaults to /fast. Unspecified: two strategy tokens at once, unrecognized tokens, conflicts. Also 8 mode combinations, no interaction matrix — what does /fast /visual do that /slow /visual doesn't?
+
+13. Non-re-entrancy unstated. A compiler emitting prompts needs the §16.4 prohibition or children start compiling grandchildren.
+
+Smaller notes
+Role line is adjective-stacked. perfection's "Role: Prompt Systems Architect. Your sole function is…" does more with less — persona inflation buys no behavior.
+"Inside native reasoning space" is vague.
+"Suppress slide constraints and tool calls" is a good instinct — generalize it into an explicit adapter isolation rule: exactly one adapter's constraints ship, the others are silent.
+The four changes that buy the most
+Add materiality tiers and route unresolved Tier-1 items to blocking gates (audience, slide count, brand, image model, exemplar, environment tier).
+Split the visual adapter by target model, or gate the target as Tier 1.
+Define the Cliché Firewall as an enumerated list, and give the pacing rule a denominator plus a failure action.
+Add a Compile Header + section order + adaptive fencing, and specify the Tier B failure envelope.
