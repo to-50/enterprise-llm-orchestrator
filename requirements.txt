@@ -1,54 +1,214 @@
-Overall read
-Strong domain thesis, genuinely good adapter design — but it's a stylesheet, not a compiler. It specifies what good output looks like in admirable detail, and almost nothing about how unresolved parameters are handled. Set beside perfection, the gap isn't polish, it's the discipline layer: no tiering, no termination condition, no auditable output contract.
+*Thinking...*
 
-The fixes are mostly additive. Your adapters can stay untouched.
+> Ah, I see — they want the firewall and readback schema formatted as plain text prompt sections that can be injected directly into the `<mimic>` template, not as formal JSON schemas. I need to rewrite both as concise, token-efficient prose blocks that fit that prompt-native style. Writing the spec containers... Defining the firewall rules with precedence order: user instructions override everything, then hard constraints, then adapter mechanics, then contextual entries. Two repair passes maximum before reporting violations. The universal rules block certain rhetorical patterns like "not just X, but Y" constructions and temporal scene-setting in opening sentences. Checking intensifier frequency, parallel structure limits, and heading consistency across the artifact. Also verifying that sentence length varies enough and that conclusions add new claims rather than just restating earlier points. Used to extend metaphors across multiple domains, which violates the constraint. Then I'm mapping out the template track for structural replication, where I need to flag verbatim strings over six words and ensure extracted mechanics describe failure conditions rather than qualities. I'm also planning the readback block to display the rendered layout with caps, mode behavior, and rules, then wiring everything together while referencing framework entries by ID.
 
-What's working
-The Environment Abstraction Layer is the best idea here. Tier A portable vs. Tier B native tool chains solves the failure where a prompt assumes tools and compiles to a no-op in plain chat. That's the same reasoning as perfection §7 APPLICABILITY (a), arrived at independently.
+Right — the previous pass compiled them as engineering specs (JSON records, provenance enums, derived fields). That form is unusable as prompt text: it costs ~3,000 tokens and asks the model to maintain state it has no way to persist. Below is the same logic recompiled as two injectable containers, sized for a prompt body.
 
-Your quantified constraints are real constraints. Max 3 takeaways, max 9 words/bullet, 20/50/30 pacing, --ar 16:9. These pass the mechanism test — a check can fail. Most style prompts say "be concise" and ship nothing.
+Two changes worth flagging before the blocks. First, the firewall now injects **twice** — once governing Mimic's own output, once reproduced verbatim inside the compiled downstream prompt, since the downstream model is the one actually writing slides. Second, entry IDs survive the compression, because `BOUNDS TRIPPED` needs something to name.
 
-Zero-Code Rule is a detectable negative constraint (did output contain an HTML fence? observable). De-plagiarism filter is load-bearing for exemplar work. Keep both.
+---
 
-Structural problems, worst first
-1. No materiality tiering — nothing stops invention. This is the hole everything else falls through. Style parameters feel low-stakes and are actually determinative: default "audience = executive board" when it's a customer webinar and every action header is wrong. Tier-1 candidates you're currently letting the model invent:
+## Container 1
 
-target audience + seniority
-slide count / deck length
-brand constraints (palette, fonts, logo rules)
-the target image model (see #3)
-the exemplar itself under /template
-environment tier (see #4)
-2. The 5-Pillar Gate is declared, never operationalized. No status vocabulary, no turn format, no exit condition, no progress discipline, no user escape hatch. "Enforce the gate" is an instruction to itself with no mechanism — in practice /slow yields an unbounded freeform interrogation that re-asks answered questions and terminates whenever the model gets bored. Compare §3.1–3.7: the pillar ledger is worthless without the status vocabulary and the exit footer.
+````
+<cliche_firewall>
+SCOPE: (a) every artifact you produce; (b) every register sample in the readback, at equal
+severity — a sample that trips the firewall misrepresents what will ship; (c) the downstream
+prompt you compile — reproduce this container inside it verbatim.
 
-3. Three incompatible image grammars collapsed into one adapter. "Compile Midjourney, Flux, or DALL-E 3 prompts" — Midjourney takes weighted keyword sequences plus -- flags; DALL-E 3 takes natural-language sentences and silently rewrites your prompt; Flux takes prose and has no --ar. One emitted prompt is syntactically invalid for at least two of the three. Target model is Tier 1, not a footnote.
+PRECEDENCE: explicit user instruction > hard entries > adapter mechanics > budgeted entries >
+your defaults. A user instruction requiring a banned pattern ships, and is logged in
+INTERPRETATION as an override.
 
-4. Tier A/B detection rule is absent. How does the model decide which environment it's in? It can't reliably introspect tool availability, so it will guess — and the failure mode is hallucinated tool calls, the worst outcome this design can produce. Make it a declared input, gate its absence, and define the Tier B→A fallback when a declared tool 404s.
+REPAIR: two passes maximum. Still tripped → report under BOUNDS TRIPPED with the entry ID.
+Never loop. Never ship silently.
 
-5. /template with no exemplar is an unhandled null. Structural replication of nothing. Hard blocking gate.
+── UNIVERSAL (always active) ──
+U1  [hard] Fails if any sentence uses "not just X, but Y" / "isn't about X, it's about Y".
+U2  [hard] Fails if the opening sentence sets a temporal or market scene ("in today's…",
+    "as the landscape evolves").
+U3  [hard] Fails on: delve, leverage (v.), utilise/utilize, seamless, robust, unlock, harness,
+    elevate, empower, game-changer, revolutionise, cutting-edge, best-in-class, holistic,
+    synergy, solutions (as product noun), ecosystem, journey (metaphorical), "in the X space".
+U4  [hard] Fails on: "at the end of the day", "the reality is", "let's be honest", "make no
+    mistake", "here's the thing", "that's where X comes in", "dive in", "unpack",
+    "peel back the layers".
+U5  [hard] Fails if a sentence opens with a rhetorical question to the reader ("What if…",
+    "Ever wondered…", "Sound familiar?").
+U6  [max 1 / 500 words] Fails if intensifiers exceed budget: truly, genuinely, incredibly,
+    really, absolutely.
+U7  [max 1 / 500 words] Fails if parallel triads — three coordinate elements of matching
+    grammatical form — exceed budget.
+U8  [hard] Fails if the spine is problem → solution → benefit, unless specified.
+U9  [hard] Fails if the closing section restates what preceded without adding a claim, or opens
+    "In conclusion" / "Ultimately" / "To sum up".
+U10 [hard] Fails if sentence length is uniform: standard deviation under 4 words across any
+    300-word span.
+U11 [hard] Fails if all headings share one grammatical form (all gerunds, all noun phrases,
+    all questions).
+U12 [hard] Fails if the artifact opens by restating the request, describing its own structure,
+    or addressing the reader ("Great question", "Here's a breakdown", "Below you'll find").
+U13 [hard] Fails if a heading asserts a count that is not load-bearing ("3 key reasons").
+U14 [hard] Fails if evidence is attributed to an unnamed source ("studies show", "experts
+    agree", "research suggests").
+U15 [hard] Fails if the artifact rates its own importance ("crucially", "importantly",
+    "this is the key insight").
+U16 [hard] Fails if the reader is flattered, or their intelligence invoked.
+U17 [hard] Fails if a metaphor is extended with imagery from a second domain.
+U18 [hard] Fails if a quality is described where the artifact could instead demonstrate it.
+U19 [hard] Fails if opposing positions are balanced with no verdict, unless neutrality is
+    specified.
 
-6. Cliché Firewall is invoked three times and never defined. As written it's an adjectival edge in a rulebook's clothes. Needs an enumerated banlist (delve, tapestry, unlock, elevate, game-changer, in today's fast-paced) or a mechanical test. Same problem: "elite human standards," "production-grade," "high-fidelity," and "Tier-1 consulting standards" — whose? If you mean Minto's pyramid principle, say Minto.
+── /markup — PROSE & COPY ──
+P1 [hard] Fails if the piece opens on a composite protagonist ("Sarah had a problem",
+   "Imagine a manager who…").
+P2 [hard] Fails if the piece opens on a historical vignette serving only as an on-ramp.
+P3 [hard] Fails if the piece opens on a statistic whose function is arrest rather than support.
+P4 [max 2 / 1000 words] Fails if single-sentence emphasis paragraphs exceed budget.
+P5 [max 1 / 150 words] Fails if em-dash appositives exceed budget.
+P6 [hard] Fails if a paragraph closes on a standalone aphoristic fragment.
+P7 [hard] Fails if a continuous argument is rendered as a numbered list, unless specified.
+P8 [max 1] Fails if "First… Second… Finally…" signposting appears in more than one section.
 
-7. No quality layer at all. The irony: a quality-mimicry engine with no defined quality standard, no reviewer, no critique pass. Minimum viable is two rubric dimensions per adapter, e.g. — Canva: "Action headers — fails if any header is a topic label rather than an assertion." Prose: "Pacing — fails if any 100-word window deviates >10% from 20/50/30."
+── /canva — DECK ──
+D1 [hard] Fails if a headline names a topic rather than asserting a claim ("Market Overview",
+   "Our Approach").
+D2 [hard] Fails if a terminal slide carries only thanks, contacts, or "Questions?".
+D3 [hard] Fails if more than 40% of content slides carry exactly three bullets.
+D4 [hard] Fails if a single layout covers more than 60% of content slides.
+D5 [hard] Fails if a summary slide restates body slides without a new claim.
+D6 [contextual] Fails if an agenda slide appears in a deck under 12 slides.
+D7 [hard] Fails if a three-column icon + heading + one-line triptych appears.
+D8 [hard] Fails if a diagram uses an iceberg, funnel, pyramid, flywheel, or journey path.
+D9 [contextual] Fails if a 2×2 appears without both axes continuous and labelled with units
+   or poles.
+D10 [hard] Fails if imagery is decorative rather than evidential (skylines, handshakes,
+    whiteboard teams, abstract networks).
+D11 [hard] Fails if speaker notes paraphrase the slide instead of supplying what the slide
+    omits. Notes are subject to all universal entries.
 
-8. The pacing distribution has no denominator. 20/50/30 of what — sentences per paragraph, per section, per document? Measured when, and what happens on violation? Also it's asserted as universal cadence, which is wrong for legal notices and technical docs.
+── /visual — ART DIRECTION ──
+V1 [hard] Fails on gradient mesh or blurred-blob backgrounds.
+V2 [hard] Fails on violet→blue or teal→indigo linear gradient as primary surface.
+V3 [hard] Fails on centred hero: two-line headline + one-line subhead + single CTA.
+V4 [hard] Fails on isometric or flat-vector human figures.
+V5 [hard] Fails on glassmorphism or 3D-bevelled cards.
+V6 [hard] Fails on a three-up feature grid of icon + heading + one line.
+V7 [hard] Fails if the prompt omits camera placement, light source, or surface texture.
+V8 [contextual] Fails if dark mode is default without being specified or required by context
+   of use.
 
-9. No output contract. No section order, no Compile Header, no version stamp — so §16.2(a)'s recompile trigger is unobservable and the user cannot audit what was invented. Related: quadruple backticks are hardcoded. Paste an exemplar containing a 4-backtick fence (routine in docs about markdown) and the artifact breaks. Use adaptive fencing.
+── /template — STRUCTURAL REPLICATION ──
+T1 [hard] Fails if any span of 6+ consecutive words is lifted from the exemplar.
+T2 [hard] Fails if an extracted mechanic names a quality rather than a failure condition.
+    "Executive skimability" is rejected; "Fails if a headline carries two claims" is accepted.
+T3 [hard] Fails if the exemplar's subject matter, not only its structure, reaches the output.
 
-10. Containers injected unconditionally. Empty containers are worse than absent ones — they invite the downstream model to fill them.
+── SHORT-FORM (active when goal involves email, UI, or notification copy) ──
+S1 [hard] Fails on: "hope this finds you well", "circling back", "touching base", "just
+   checking in", "per my last email", "let me know if you have any questions", "happy to
+   discuss further", "please don't hesitate".
+S2 [hard] Fails if the ask appears later than the second sentence.
+S3 [hard] Fails if a subject line names a topic rather than the decision required.
+S4 [hard] Fails on: "Oops", "Whoops", "Something went wrong", "Awesome!", "Nice work!".
+S5 [hard] Fails on generic button labels where a specific verb exists: "Submit", "Learn More",
+   "Get Started", "Continue".
+S6 [hard] Fails if error copy blames the user or omits the corrective action.
+</cliche_firewall>
+````
 
-11. "Fail-fast validation" is named, not specified. No error codes, no halt semantics, no envelope. Your Tier B tool chain is the most failure-prone component in the design and has zero exception protocol: what happens when search_brand_templates returns 0 results, or autofill_design rejects the field mapping?
+---
 
-12. Mode parsing gaps. /slow is marked default in the process body while the header reads /fast or /slow — and your sibling compiler defaults to /fast. Unspecified: two strategy tokens at once, unrecognized tokens, conflicts. Also 8 mode combinations, no interaction matrix — what does /fast /visual do that /slow /visual doesn't?
+## Container 2
 
-13. Non-re-entrancy unstated. A compiler emitting prompts needs the §16.4 prohibition or children start compiling grandchildren.
+````
+<readback>
+Print this before the compiled prompt. One screen, no preamble, no closing summary.
 
-Smaller notes
-Role line is adjective-stacked. perfection's "Role: Prompt Systems Architect. Your sole function is…" does more with less — persona inflation buys no behavior.
-"Inside native reasoning space" is vague.
-"Suppress slide constraints and tool calls" is a good instinct — generalize it into an explicit adapter isolation rule: exactly one adapter's constraints ship, the others are silent.
-The four changes that buy the most
-Add materiality tiers and route unresolved Tier-1 items to blocking gates (audience, slide count, brand, image model, exemplar, environment tier).
-Split the visual adapter by target model, or gate the target as Tier 1.
-Define the Cliché Firewall as an enumerated list, and give the pacing rule a denominator plus a failure action.
-Add a Compile Header + section order + adaptive fencing, and specify the Tier B failure envelope.
+── RULES ──
+R1  Two sections carry values: INTERPRETATION is what you think was asked for. ASSUMPTIONS is
+    what you added. Never merge them.
+R2  Surface a value only if a wrong reading would invalidate the artifact. If a wrong reading
+    would merely blemish it, decide silently and say nothing.
+R3  Every mechanic is written as "Fails if <observable property>". A mechanic naming a quality
+    is invalid — rewrite or drop it.
+R4  Never state a register value as an adjective. Render it as a sample.
+R5  Where a benchmark or baseline artifact exists, the sample is comparative: Was / Now, both
+    lines asserting the SAME proposition. Register varies, content does not. A sample that
+    changes meaning makes correction ambiguous between voice and substance.
+R6  Where no baseline exists, give one standalone line in the target register.
+R7  Samples obey the full firewall at production severity.
+R8  A gesture on an axis ("warmer", "sharper") sets direction unconditionally. Vagueness never
+    yields no movement. Default magnitude is ONE step: a change noticeable unprompted in a
+    side-by-side, and no more. A gesture repeated twice means two steps, not one larger jump.
+R9  Conflicting gestures produce separate entries, both preserved, separated by device — state
+    which device carries which axis. Never discard an axis to resolve tension.
+R10 Ask a question ONLY where the value is invalidating AND two readings are genuinely
+    defensible. Maximum two questions. Maximum two alternatives each.
+R11 Label the reading "Current interpretation", never "default". A is your present reading, not
+    a fallback.
+R12 Proposals are default-out and rendered last, separated from questions. A question is a gap
+    needing an answer; a proposal is an addition needing permission. Bundling them makes the
+    optional read as obligatory.
+R13 Omit any empty section entirely.
+
+── BUDGETS (overflow is a signal, not a display problem) ──
+mechanics 5 · assumptions 7 lines · bounds 3 · questions 2 · proposals 2 · sample 2 sentences
+per side. More than 7 invalidating assumptions means the goal is under-specified: raise one
+question about the goal itself rather than a longer readback.
+
+── MODE ──
+/fast : project the readback, then compile without waiting. Proceed line reads
+        "If unchanged, proceeding on A."
+/slow : block compilation. Proceed line reads "Not compiling until this is confirmed or
+        corrected." Enforce the 5-Pillar Gate before anything else.
+Round cap: 3. At cap, compile and mark unratified values as assumptions in the prompt trailer,
+not as accepted interpretations. A corrected value is never re-surfaced — each round must
+strictly shrink the open set.
+
+── LAYOUT ──
+INTERPRETATION
+<target: artifact type, audience, function, scale>
+<structural shape in one line>
+Fails if …
+Fails if …
+
+Register — one step <axis> vs <baseline>:
+  Was:  "…"
+  Now:  "…"
+
+ASSUMPTIONS
+<invalidating additions, one line each, declarative>
+<flag uncertain ones inline with [uncertain]>
+
+BOUNDS TRIPPED                    [omit when empty]
+<requested vs compiled, with reason. Firewall escalations named by entry ID.>
+
+QUESTIONS                         [flagged items only, max 2]
+<axis or value> —
+  A. <current interpretation>
+  B. <alternative>
+<mode-dependent proceed line>
+
+PROPOSALS                         [opt-in, default out]
+<change>. Costs <cost>. Not included unless you say so.
+</readback>
+````
+
+---
+
+## Wiring into your prompt
+
+Four edits:
+
+**Step 1, Track Check.** Replace the `/fast` line. "Bypass diagnostic loops completely" currently bypasses the readback too, which kills magnitude ratification on exactly the tasks where speed matters. Make it: *`/fast`: project the readback, compile without waiting for response. Do not skip the register sample.*
+
+**Step 2, Rhetorical Pacing Adapter.** Your cadence ratios (20/50/30) and firewall entry U10 are the same constraint stated twice, one as a target and one as a floor. Keep both, and say so — the ratios shape, U10 catches failure.
+
+**Step 3, De-Plagiarism Filter.** Point it at T1–T3 instead of restating the rule. `<exemplar_benchmark>` content is governed by the `/template` block whichever track is active.
+
+**Step 4, Prompt Assembly.** Add `<cliche_firewall>` to the injected-container list, and give the fail-fast validation something to check: *reject output that trips any hard entry; name the entry ID on rejection.* Without the ID, the downstream model has no way to report a violation it cannot repair, so it will paraphrase around the ban and ship anyway.
+
+**Cost:** ~1,400 tokens for both containers. The firewall is roughly 1,000 of that, and about 400 is track-specific — if you're running a single track, cut the other three blocks.
+
+**One open item.** R10 gates questions on "two readings genuinely defensible," which is the only rule here not phrased as a failing check. It's the highest-leverage line in the container, since it alone decides whether the user gets interrupted. Worth one pass to see whether it can be made observable; if it can't, it stays judgment and you accept the variance.
