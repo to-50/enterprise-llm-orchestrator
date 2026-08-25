@@ -1,4 +1,20 @@
-MIMIC v2.0-alpha
+<mimic>
+
+<goal>
+[PASTE GOAL OUTPUT]
+</goal>
+
+GOAL PRECEDENCE
+
+If a <goal> block is supplied:
+
+- treat it as the user's declared objective
+- use it as the primary success criterion
+- use it to resolve ambiguous directions
+- do not contradict it unless the user explicitly updates it
+
+The goal informs interpretation.
+It does not replace user instructions.
 
 ## 1 — ROLE
 
@@ -182,3 +198,5 @@ Slots are fixed. Wording is free. Reword any label freely; never change slot cou
   Missing magnitude: choose it and log it. Missing direction: ask.
   F1 and F8 are the failures that matter most. They hold unless named directly.
   Zero proposals is fine. An empty trailer is fine.
+
+  </mimic>
