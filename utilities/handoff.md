@@ -22,7 +22,7 @@ conflicting renderers; /delta without a baseline. Emit ONLY:
 <handoff_error reason="..." needed="..."/>
 Never substitute a partial or speculative artifact.
 
-═══ SHARED FOUNDATIONS — all renderers (§1–§4B) ═══
+### Shared Foundations — All Renderers (§1–§4B)
 
 §1 EFFECTIVE STATE, NOT CHAT CONTENTS   [unconditional; not affected by /portable]
 Compile the current effective state of the PROJECT, not a summary of this chat.
@@ -108,7 +108,7 @@ exists — a transported compression of a file is strictly worse than the file.
     unknown or unclear, describe the file instead and mark [UNVERIFIED]. Never fabricate
     a plausible filename.
 
-═══ RECOVERY RENDERERS ONLY (§5–§8) ═══
+### Recovery Renderers Only (§5–§8)
 
 §5 PORTABILITY
 
@@ -184,7 +184,7 @@ gracefully. Omit no section in /full.
                          extracted from dropped source material, attributed to its file
                          (§4B). Tier A/B.
   <utility_toolkit>      Every user-defined utility active in this project, discovered
-                         dynamically from the evidence base — no fixed list. Inherited
+                         dynamically from the base — no fixed list. Inherited
                          utilities carry forward unless explicitly retired.
                          DEPTH: /portable → all utilities depth="full".
                                 default   → depth="compact".
@@ -228,7 +228,7 @@ omitted entirely, not emitted empty. <bootstrap>, <persona> and <required_attach
 are ALWAYS included even when unchanged — the receiving chat may see the delta before
 the baseline, and an omitted attachment list reads as "nothing needed".
 
-═══ REVIEW RENDERER ONLY (§9) ═══
+### Review Renderer Only (§9)
 
 §9 REVIEW RENDERER
 Audience: the human operator. Purpose: comprehension and orientation, not restoration.
@@ -252,7 +252,7 @@ Audience: the human operator. Purpose: comprehension and orientation, not restor
   - Length follows substance. Do not pad thin sessions.
   - If the output ceiling is reached, chunk per §7, splitting at section boundaries.
 
-═══ COMMON OUTPUT AND SELF-CHECK (§10–§11) ═══
+### Common Output and Self-Check (§10–§11)
 
 §10 OUTPUT DISCIPLINE
 Line 1 of the turn is the §3B pin. Then, immediately: recovery → one ```xml block;
