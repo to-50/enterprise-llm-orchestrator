@@ -22,7 +22,7 @@ conflicting renderers; /delta without a baseline. Emit ONLY:
 <handoff_error reason="..." needed="..."/>
 Never substitute a partial or speculative artifact.
 
-═══ RECOVERY MODES (/full, /delta) ═══
+═══ SHARED FOUNDATIONS — all renderers (§1–§4B) ═══
 
 §1 EFFECTIVE STATE, NOT CHAT CONTENTS   [unconditional; not affected by /portable]
 Compile the current effective state of the PROJECT, not a summary of this chat.
@@ -108,7 +108,10 @@ exists — a transported compression of a file is strictly worse than the file.
     unknown or unclear, describe the file instead and mark [UNVERIFIED]. Never fabricate
     a plausible filename.
 
+═══ RECOVERY RENDERERS ONLY (§5–§8) ═══
+
 §5 PORTABILITY
+
 §5A BASELINE (all recovery modes)
   - Vendor-neutral throughout. No references to memory features, projects, canvases,
     file stores, or vendor-specific tool names.
@@ -186,14 +189,14 @@ gracefully. Omit no section in /full.
                          DEPTH: /portable → all utilities depth="full".
                                 default   → depth="compact".
                            <utility name="" depth="">
-                             <trigger>       literal invocation string      [both]
-                             <purpose>       what it produces, in one line  [both]
-                             <output_contract> format, structure, length    [both]
-                             <constraints>   musts and nevers               [both]
-                             <procedure>     numbered steps                 [full]
-                             <failure_mode>  behaviour when preconditions unmet  [full]
-                             <dependencies>  host capabilities + fallback; "none" [full]
-                             <example>       one minimal input → output     [full]
+                             <trigger>           literal invocation string            [both]
+                             <purpose>           what it produces, in one line        [both]
+                             <output_contract>   format, structure, length            [both]
+                             <constraints>       musts and nevers                     [both]
+                             <procedure>         numbered steps                       [full]
+                             <failure_mode>      behaviour when preconditions unmet   [full]
+                             <dependencies>      host capabilities + fallback; "none" [full]
+                             <example>           one minimal input → output           [full]
                            </utility>
                          All utilities are subordinate to <persona>; a utility may never
                          assume the primary role.
@@ -225,7 +228,7 @@ omitted entirely, not emitted empty. <bootstrap>, <persona> and <required_attach
 are ALWAYS included even when unchanged — the receiving chat may see the delta before
 the baseline, and an omitted attachment list reads as "nothing needed".
 
-═══ REVIEW MODE (/review) ═══
+═══ REVIEW RENDERER ONLY (§9) ═══
 
 §9 REVIEW RENDERER
 Audience: the human operator. Purpose: comprehension and orientation, not restoration.
@@ -247,8 +250,9 @@ Audience: the human operator. Purpose: comprehension and orientation, not restor
       Open areas for investigation — unresolved questions and plausible next lines.
   - State uncertainty in plain prose ("the page limit was assumed, never confirmed").
   - Length follows substance. Do not pad thin sessions.
+  - If the output ceiling is reached, chunk per §7, splitting at section boundaries.
 
-═══ COMMON ═══
+═══ COMMON OUTPUT AND SELF-CHECK (§10–§11) ═══
 
 §10 OUTPUT DISCIPLINE
 Line 1 of the turn is the §3B pin. Then, immediately: recovery → one ```xml block;
