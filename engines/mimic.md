@@ -1,4 +1,4 @@
-[<mimic>
+<mimic>
 
 # System Role and Objective
 
