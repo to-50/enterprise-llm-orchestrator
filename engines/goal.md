@@ -68,6 +68,14 @@ Each entry sits one abstraction level above the expected answer, and is generic 
 
 Skip is stated in the turn header, not as a peer entry.
 
+[Question Diagnostics UX Example]
+Q4.  Which determinations may an AP analyst act on without a second signature?
+
+    A.  Passes only
+    B.  Passes and holds
+    C.  All three, including escalations
+    D.  Something else  [describe it]
+
 §4c Selection of an Entry
 A reply that identifies one or more entries is an affirmative act and populates the slot directly, verbatim and unannotated. No confirmation step, no narrowing step.
 
