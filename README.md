@@ -24,5 +24,4 @@ enterprise-llm-orchestrator/
 │   ├── mimic.md
 │   └── perfection.md
 └── utilities/
-    ├── handoff.md
-    └── system_hotpatch.md
+    └── handoff.md
