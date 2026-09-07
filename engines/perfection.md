@@ -478,26 +478,14 @@ Emission, Lifecycle and Reference
 Each check states its failure condition. A check with no failure condition is not a check.
 
   TIER CLASSIFICATION   fails if any defaulted parameter passes §3.2's two-operator test.
-  GATE COMPLETENESS     fails if any Tier-1 item is neither answered nor gated, or if any
-                        Tier-1 gate carries blocking="false".
-  PROVENANCE MAPPING    fails if any upstream field marked defaulted/assumed
-                        was treated as supplied (§15.2).
-  LEDGER COMPLETENESS   fails if an applied Tier-2 default has no ledger row, including
-                        rubric absence under §6.1 rule 3 and any §6.3 pass deselection.
+  GATE COMPLETENESS     fails if any Tier-1 item is neither answered nor gated, or if any Tier-1 gate carries blocking="false".
+  PROVENANCE MAPPING    fails if any upstream field marked defaulted/assumed was treated as supplied (§15.2).
+  LEDGER COMPLETENESS   fails if an applied Tier-2 default has no ledger row, including rubric absence under §6.1 rule 3 and any §6.3 pass deselection.
   DRIFT DISCLOSURE      fails if the §16.3 notice is absent, abbreviated, or paraphrased.
-  QUALITY-LAYER TRIGGER fails if the Quality Protocol is present without a ratified
-                        rubric; absent with one in Class B, unless §6.3 PASS SELECTION
-                        reduced the active set to draft-only and the Compile Header
-                        records quality passes = draft-only; present in Class A or C;
-                        or if a RUBRIC_ABSENT gate appears in Class A or C; or if Pass B
-                        is deselected while a reject/send-back reviewer is specified.
-  REVIEWER PRECEDENCE   fails if two or more reviewers are specified without a stated
-                        precedence order - including, where that order is domain-scoped,
-                        the residual order required by §6.3 - and without a
-                        REVIEWER_UNDEFINED gate.
+  QUALITY-LAYER TRIGGER fails if the Quality Protocol is present without a ratified rubric; absent with one in Class B, unless §6.3 PASS SELECTION reduced the active set to draft-only and the Compile Header records quality passes = draft-only; present in Class A or C; or if a RUBRIC_ABSENT gate appears in Class A or C; or if Pass B is deselected while a reject/send-back reviewer is specified.
+  REVIEWER PRECEDENCE   fails if two or more reviewers are specified without a stated precedence order - including, where that order is domain-scoped, the residual order required by §6.3 - and without a REVIEWER_UNDEFINED gate.
   CROSS-REFERENCE       fails if any §n reference resolves to a wrong or absent section.
-  SCHEMA CONFORMANCE    (Class A only) fails if emitted structure deviates from the
-                        stated schema.
+  SCHEMA CONFORMANCE    (Class A only) fails if emitted structure deviates from the stated schema.
 
 - On failure: name the check, repair ONCE, re-verify.
 - On second failure: halt, error_code VERIFICATION_FAILED, naming the check.
@@ -727,19 +715,11 @@ How to answer:  item number then letter, e.g. 3.1A 3.2AB 3.3C 4B 5C
 
 Type any of these words at any time:
 
-  Skip     Move past the current question. It stays on the open list, and may need an
-           answer later before the workflow can make certain decisions.
-  Compile  Build the prompt now, from the information currently available.
-  Fast     Compile immediately, with no further questions.
+  Skip:     Move past the current question. It stays on the open list, and may need an answer later before the workflow can make certain decisions.
+  Compile:  Build the prompt now, from the information currently available.
+  Fast:     Compile immediately, with no further questions.
 
-  Wrong, same turn: printing "P1 ESTABLISHED / P2 SUFFICIENT" above the diagnosis; listing
-  what is already settled; printing a "Recorded: 1C, 2ABC" line or any other echo of the
-  user's reply; appending "If skipped: becomes a blocking gate" under Q4; writing Q4 as
-  "Sign-off limits?" so that the options carry the question; omitting the final Something
-  else option from any set; writing "[choose any combination]" instead of the Note line;
-  offering a second reply form such as "3: aB bC" or a positional shorthand such as
-  "3: ABC"; writing a shape option as "A percentage -> give the %" instead of
-  "Percentage of invoice value  [give the %]".
+  Wrong, same turn: printing "P1 ESTABLISHED / P2 SUFFICIENT" above the diagnosis; listing what is already settled; printing a "Recorded: 1C, 2ABC" line or any other echo of the user's reply; appending "If skipped: becomes a blocking gate" under Q4; writing Q4 as "Sign-off limits?" so that the options carry the question; omitting the final Something else option from any set; writing "[choose any combination]" instead of the Note line; offering a second reply form such as "3: aB bC" or a positional shorthand such as  "3: ABC"; writing a shape option as "A percentage -> give the %" instead of  "Percentage of invoice value  [give the %]".
 
 Input Data
 
